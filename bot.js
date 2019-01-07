@@ -1,7 +1,6 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client({disableEveryone: true});
 const fs = require("fs");
-let warns = JSON.parse(fs.readFileSync("./warns.json", "utf8"));
 
 bot.on("ready", async () => {
   console.log(`${bot.user.username} is online!`);
@@ -52,6 +51,9 @@ bot.on("message", async message => {
     warns = 0
   };
   warns[wUser.id].warns++;
+  
+  warns = JSON.parse(fs.readFileSync("./warns.json", "utf8"));
+
   
   fs.writeFile("./warns.json", JSON.stringify(warns), (err) => {
     if (err) console.log(err);
