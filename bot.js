@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client({disableEveryone: true});
 const fs = require("fs");
+let warns = JSON.parse(fs.readFileSync("./warns.json", "utf8"));
 
 bot.on("ready", async () => {
   console.log(`${bot.user.username} is online!`);
@@ -10,7 +11,44 @@ bot.on("ready", async () => {
 
 
 
+module.exports.run = async (bot, message, args) => {
 
+  //!warn @daeshan <reason>
+  if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.reply("Nemohu  to udělat!!");
+  let wUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0])
+  if(!wUser) return message.reply("Couldn't find them yo");
+  if(wUser.hasPermission("MANAGE_MESSAGES")) return message.reply("On/a Je moderátor!");
+  let reason = args.join(" ").slice(22);
+
+  if(!warns[wUser.id]) warns[wUser.id] = {
+    warns: 0
+  };
+
+  warns[wUser.id].warns++;
+
+  fs.writeFile("./warns.json", JSON.stringify(warns), (err) => {
+    if (err) console.log(err)
+  });
+
+  let warnEmbed = new Discord.RichEmbed()
+  .setDescription("Varování")
+  .setAuthor(message.author.username)
+  .setColor("#fc6400")
+  .addField("Varovaný hráč:", `<@${wUser.id}>`)
+  .addField("Varován v:", message.channel)
+  .addField("Varování :z", warns[wUser.id].warns + "/3")
+  .addField("Důvod:", reason);
+
+  let warnchannel = message.guild.channels.find(`name`, "logs");
+  if(!warnchannel) return message.reply("Nemohu najít tento kanál");
+
+  warnchannel.send(warnEmbed);
+
+  
+    
+module.exports.help = {
+  name: "warn"
+}
 
 
 bot.on("message", async message => {
@@ -41,38 +79,10 @@ bot.on("message", async message => {
     var embed = new Discord.RichEmbed()
     .setTitle("Zdásemi že potřebuješ pomoc" + message.author)
     .addField(">say", "Bot řekne co chceš!")
+    .addField(">warn", "Varuje Hráče.")
     .setThumbnail(message.author.avatarURL);
     message.channel.send(embed)
   
-  };
-  let wUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
-  let reason = args.join(" ").slice(22)
-  if(!warns[wUser.id]) warns(wUser.id) = {
-    warns = 0
-  };
-  warns[wUser.id].warns++;
-  
-  let warns = JSON.parse(fs.readFileSync("./warns.json", "utf8"));
-
-  
-  fs.writeFile("./warns.json", JSON.stringify(warns), (err) => {
-    if (err) console.log(err);
-  
-  if(!mods) return message.channel.send("Nejsi Moderátor!")
-  if(wUser.hasPermission("MANAGE_MESSAGES")) return message.reply("Tento Uživatel je moderátor. a nemohu jej varovat.");
-  if(!wUser) return message.reply("Tento člověk nejspíše není na tomto serveru!");
-  if(cmd === `${prefix}warn`){
-    var warnembed = new Discord.RichEmbed()
-    .setTitle("Varování")
-    .addField("Varování pro:", wUser)
-    .addField("Moderátor:", message.author.username)
-    .addField("Důvod:", reason)
-    .addField("Varování z:", warns[wUser.id].warns + "/3")
-    .setColor("RED")
-    .setTimestamp();
-    
-    let channelw = message.guild.channels.find(`name`, "logs");
-    channelw.send(warnembed)
   };
   
     
