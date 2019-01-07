@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client({disableEveryone: true});
 const fs = require("fs");
+const ms = rrquire("ms");
 let warns = JSON.parse(fs.readFileSync("./warns.json", "utf8"));
 
 bot.on("ready", async () => {
@@ -47,7 +48,7 @@ module.exports.run = async (bot, message, args) => {
   if(warns[wUser.id].warns == 2){
     let muterole = message.guild.roles.find(`name`, "muted");
     if(!muterole) return message.reply("You should create that role dude.");
-
+};
     let mutetime = "10s";
     await(wUser.addRole(muterole.id));
     message.channel.send(`<@${wUser.id}> has been temporarily muted`);
@@ -56,13 +57,13 @@ module.exports.run = async (bot, message, args) => {
       wUser.removeRole(muterole.id)
       message.reply(`<@${wUser.id}> has been unmuted.`)
     }, ms(mutetime))
-  }
+  };
   if(warns[wUser.id].warns == 3){
     message.guild.member(wUser).ban(reason);
     message.reply(`<@${wUser.id}> has been banned.`)
-  }
+  };
 
-}
+};
     
 module.exports.help = {
   name: "warn"
