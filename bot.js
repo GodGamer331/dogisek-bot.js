@@ -11,7 +11,7 @@ bot.on("ready", async () => {
 });
 
 
-
+//fuck
 
 module.exports.run = async (bot, message, args) => {
 
