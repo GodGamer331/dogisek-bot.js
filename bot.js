@@ -39,7 +39,7 @@ module.exports.run = async (bot, message, args) => {
   .addField("Varování :z", warns[wUser.id].warns + "/3")
   .addField("Důvod:", reason);
 
-  let warnchannel = message.guild.channels.find(`name`, "logs");
+  let warnchannel = message.guild.channels.find(`name`, `logs`);
   if(!warnchannel) return message.reply("Nemohu najít tento kanál");
 
   warnchannel.send(warnEmbed);
