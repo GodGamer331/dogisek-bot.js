@@ -24,6 +24,22 @@ bot.on("message", async message => {
   let a = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
   let b = args.join(" ").slice(22)
   let logs = message.guild.channels.find(`name`, `logs`);
-  let mods = message.guild.roles.find("name", "Moderator");
+  //let mods = message.guild.roles.find("name", "Moderator");
   let premium = message.guild.roles.find("name", "★†Premium†★");
   
+  if (cmd === `${prefix}help`){
+    if(message.member.roles.has(premium.id)) {
+      module.exports.run = async (bot, message, args) => {
+
+      const sayMessage = args.join(" ");
+      message.delete().catch();
+      message.channel.send(sayMessage);
+    }
+    }
+    
+    module.exports.help = {
+      name: "say"
+  }
+});
+
+bot.login(process.env.token);
