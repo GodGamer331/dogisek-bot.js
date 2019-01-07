@@ -29,7 +29,7 @@ let warnlevel = warns[wUser.id].warns;
 message.channel.send(new Discord.RichEmbed()
 .setDescription("Warning Information")
 .setColor("#c40000")
-.addField("Member", <@${wUser.id}>)
+.addField("Member", `${wUser.id}`)
 .addField("Moderator", message.author.username)
 .addField("Amount of Warns", warnlevel);
 
