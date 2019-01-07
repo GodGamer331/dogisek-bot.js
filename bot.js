@@ -34,6 +34,18 @@ bot.on("message", async message => {
     const saytxt = args.join(" ");
     message.channel.send(saytxt)
   };
+  
+  if(!premium) return message.channel.send("Nejsi Premium na tomto serveru!")
+  if(cmd === `${prefix}help`){
+    var embed = new Discord.RichEmbed()
+    .setTitle("Zdásemi že potřebuješ pomoc" + message.author)
+    .addField(">say", "Bot řekne co chceš!")
+    .setThumbnail(message.author.avatarURL);
+    message.channel.send(embed)
+  };
+  default:
+  
+  message.channel.send("Neznámí příkaz! Skus ``>help``!")
      
 });
 
