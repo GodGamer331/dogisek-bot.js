@@ -17,7 +17,7 @@ bot.on("message", async message => {
   if (message.author.bot) return;
   if (message.channel.type === "dm") return;
 
-  let prefix = "!";
+  let prefix = ">";
   let messageArray = message.content.split(" ");
   let cmd = messageArray[0];
   let args = messageArray.slice(1);
@@ -27,6 +27,7 @@ bot.on("message", async message => {
   //let mods = message.guild.roles.find("name", "Moderator");
   let premium = message.guild.roles.find("name", "★†Premium†★");
   
+  if(!premium) return message.channel.send("Nemáš Prémium u Dogisek Bot!!")
   if (cmd === `${prefix}help`){
     if(message.member.roles.has(premium.id)) {
       module.exports.run = async (bot, message, args) => {
