@@ -1,6 +1,8 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client({disableEveryone: true});
 const fs = require("fs");
+let warns = JSON.parse(fs.readFileSync("./warns.json", "utf8"));
+
 bot.on("ready", async () => {
   console.log(`${bot.user.username} is online!`);
   
@@ -24,7 +26,7 @@ bot.on("message", async message => {
   let a = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
   let b = args.join(" ").slice(22)
   let logs = message.guild.channels.find(`name`, `logs`);
-  //let mods = message.guild.roles.find("name", "Moderator");
+  let mods = message.guild.roles.find("name", "Moderator");
   let premium = message.guild.roles.find("name", "★†Premium†★");
   
   
@@ -43,6 +45,32 @@ bot.on("message", async message => {
     .setThumbnail(message.author.avatarURL);
     message.channel.send(embed)
   
+  };
+  let wUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
+  let reason = args.join(" ").slice(22)
+  if(!warns[wUser.id]) warns(wUser.id) = {
+    warns = 0
+  };
+  warns[wUser.id].warns++;
+  
+  fs.writeFile("./warns.json", JSON.stringify(warns), (err) => {
+    if (err) console.log(err);
+  
+  if(!mods) return message.channel.send("Nejsi Moderátor!")
+  if(wUser.hasPermission("MANAGE_MESSAGES")) return message.reply("Tento Uživatel je moderátor. a nemohu jej varovat.");
+  if(!wUser) return message.reply("Tento člověk nejspíše není na tomto serveru!");
+  if(cmd === `${prefix}warn`){
+    var warnembed = new Discord.RichEmbed()
+    .setTitle("Varování")
+    .addField("Varování pro:", wUser)
+    .addField("Moderátor:", message.author.username)
+    .addField("Důvod:", reason)
+    .addField("Varování z:", warns[wUser.id].warns + "/3")
+    .setColor("RED")
+    .setTimestamp();
+    
+    let channelw = message.guild.channels.find(`name`, "logs");
+    channelw.send(warnembed)
   };
   
     
