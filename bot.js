@@ -52,7 +52,7 @@ bot.on("message", async message => {
   };
   warns[wUser.id].warns++;
   
-  warns = JSON.parse(fs.readFileSync("./warns.json", "utf8"));
+  let warns = JSON.parse(fs.readFileSync("./warns.json", "utf8"));
 
   
   fs.writeFile("./warns.json", JSON.stringify(warns), (err) => {
