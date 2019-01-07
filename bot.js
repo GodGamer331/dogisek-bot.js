@@ -33,7 +33,7 @@ bot.on("message", async message => {
     if(!args[0]) return message.channel.send("Použití: ``>say BlahBlahBlah lol``")
     const saytxt = args.join(" ");
     message.channel.send(saytxt)
-  };
+  }
   
   if(!premium) return message.channel.send("Nejsi Premium na tomto serveru!")
   if(cmd === `${prefix}help`){
@@ -43,10 +43,9 @@ bot.on("message", async message => {
     .setThumbnail(message.author.avatarURL);
     message.channel.send(embed)
   
-  default:
-  
-  message.channel.send("Neznámí příkaz! Skus ``>help``!");
   };
+  
+    
   
 });
 
