@@ -36,7 +36,7 @@ bot.on("message", async message => {
       message.channel.send(sayMessage);
     }
     }
-    
+    }
     module.exports.help = {
       name: "say"
   }
