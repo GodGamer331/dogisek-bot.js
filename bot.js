@@ -31,7 +31,7 @@ message.channel.send(new Discord.RichEmbed()
 .setColor("#c40000")
 .addField("Member", `${wUser.id}`)
 .addField("Moderator", message.author.username)
-.addField("Amount of Warns", warnlevel);
+.addField("Amount of Warns", warnlevel));
 
 }
 
