@@ -24,7 +24,7 @@ module.exports.run = async (bot, message, args) => {
   if(!warns[wUser.id]) warns[wUser.id] = {
     warns: 0
   };
-
+//
   warns[wUser.id].warns++;
 
   fs.writeFile("./warns.json", JSON.stringify(warns), (err) => {
