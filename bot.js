@@ -42,11 +42,12 @@ bot.on("message", async message => {
     .addField(">say", "Bot řekne co chceš!")
     .setThumbnail(message.author.avatarURL);
     message.channel.send(embed)
-  };
+  
   default:
   
   message.channel.send("Neznámí příkaz! Skus ``>help``!")
-     
+  };
+  
 });
 
 bot.login(process.env.token);
