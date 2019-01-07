@@ -4,7 +4,7 @@ const fs = require("fs");
 bot.on("ready", async () => {
   console.log(`${bot.user.username} is online!`);
   
-  bot.user.setActivity("To my creator JustNela#666", {type: "LISTENING"});
+  bot.user.setActivity("Všechny prémium! [>]", {type: "WATCHING"});
 });
 
 
@@ -27,21 +27,14 @@ bot.on("message", async message => {
   //let mods = message.guild.roles.find("name", "Moderator");
   let premium = message.guild.roles.find("name", "★†Premium†★");
   
+  
   if(!premium) return message.channel.send("Nemáš Prémium u Dogisek Bot!!")
   if (cmd === `${prefix}help`){
-    if(message.member.roles.has(premium.id)) {
-      module.exports.run = async (bot, message, args) => {
-
-      const sayMessage = args.join(" ");
-      message.delete().catch();
-      message.channel.send(sayMessage);
-    }
-    }
-    
-    module.exports.help = {
-      name: "say"
-    }
-  }
+    if(!args[0]) return message.channel.send("Použití: ``>say BlahBlahBlah lol``")
+    const saytxt = args.join(" ");
+    msg.channel.send(saytxt)
+  };
+     
 });
 
 bot.login(process.env.token);
