@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const bot = new Discord.Client({disableEveryone: true});
 const fs = require("fs");
 
-let warns = JSON.parse(fs.readFileSync("./warns.json", "utf8"));
+let warns = JSON.parse(fs.readFileSync("./warnings.json", "utf8"));
 
 bot.on("ready", async () => {
   console.log(`${bot.user.username} is online!`);
@@ -12,43 +12,44 @@ bot.on("ready", async () => {
 
 
 
+
 module.exports.run = async (bot, message, args) => {
 
   //!warn @daeshan <reason>
-  if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.reply("Nemohu  to udělat!!");
+  if(!message.member.hasPermission("MANAGE_MEMBERS")) return message.reply("No can do pal!");
   let wUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0])
   if(!wUser) return message.reply("Couldn't find them yo");
-  if(wUser.hasPermission("MANAGE_MESSAGES")) return message.reply("On/a Je moderátor!");
+  if(wUser.hasPermission("MANAGE_MESSAGES")) return message.reply("They waaaay too kewl");
   let reason = args.join(" ").slice(22);
 
   if(!warns[wUser.id]) warns[wUser.id] = {
     warns: 0
   };
-//
+
   warns[wUser.id].warns++;
 
-  fs.writeFile("./warns.json", JSON.stringify(warns), (err) => {
+  fs.writeFile("./warnings.json", JSON.stringify(warns), (err) => {
     if (err) console.log(err)
   });
 
   let warnEmbed = new Discord.RichEmbed()
-  .setDescription("Varování")
+  .setDescription("Warns")
   .setAuthor(message.author.username)
   .setColor("#fc6400")
-  .addField("Varovaný hráč:", `<@${wUser.id}>`)
-  .addField("Varován v:", message.channel)
-  .addField("Varování :z", warns[wUser.id].warns + "/3")
-  .addField("Důvod:", reason);
+  .addField("Warned User", `<@${wUser.id}>`)
+  .addField("Warned In", message.channel)
+  .addField("Number of Warnings", warns[wUser.id].warns)
+  .addField("Reason", reason);
 
-  let warnchannel = message.guild.channels.find(`name`, `logs`);
-  if(!warnchannel) return message.reply("Nemohu najít tento kanál");
+  let warnchannel = message.guild.channels.find(`name`, "logs1");
+  if(!warnchannel) return message.reply("Couldn't find channel");
 
   warnchannel.send(warnEmbed);
 
   if(warns[wUser.id].warns == 2){
     let muterole = message.guild.roles.find(`name`, "muted");
     if(!muterole) return message.reply("You should create that role dude.");
-};
+
     let mutetime = "10s";
     await(wUser.addRole(muterole.id));
     message.channel.send(`<@${wUser.id}> has been temporarily muted`);
@@ -57,17 +58,17 @@ module.exports.run = async (bot, message, args) => {
       wUser.removeRole(muterole.id)
       message.reply(`<@${wUser.id}> has been unmuted.`)
     }, ms(mutetime))
-  };
+  }
   if(warns[wUser.id].warns == 3){
     message.guild.member(wUser).ban(reason);
     message.reply(`<@${wUser.id}> has been banned.`)
-  };
+  }
 
-//FUUCK
-    
+}
+
 module.exports.help = {
   name: "warn"
-  }
+}
 
 
 bot.on("message", async message => {
