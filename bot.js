@@ -44,7 +44,25 @@ module.exports.run = async (bot, message, args) => {
 
   warnchannel.send(warnEmbed);
 
-  
+  if(warns[wUser.id].warns == 2){
+    let muterole = message.guild.roles.find(`name`, "muted");
+    if(!muterole) return message.reply("You should create that role dude.");
+
+    let mutetime = "10s";
+    await(wUser.addRole(muterole.id));
+    message.channel.send(`<@${wUser.id}> has been temporarily muted`);
+
+    setTimeout(function(){
+      wUser.removeRole(muterole.id)
+      message.reply(`<@${wUser.id}> has been unmuted.`)
+    }, ms(mutetime))
+  }
+  if(warns[wUser.id].warns == 3){
+    message.guild.member(wUser).ban(reason);
+    message.reply(`<@${wUser.id}> has been banned.`)
+  }
+
+}
     
 module.exports.help = {
   name: "warn"
