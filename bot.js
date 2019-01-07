@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client({disableEveryone: true});
 const fs = require("fs");
-const ms = require("ms");
+
 let warns = JSON.parse(fs.readFileSync("./warns.json", "utf8"));
 
 bot.on("ready", async () => {
