@@ -20,7 +20,10 @@ bot.on("message", async message => {
 
   if (message.author.bot) return;
   if (message.channel.type === "dm") return;
-
+  
+  let wUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
+  let reason = args.join(" ").slice(22);
+  
   let prefix = ">"
   let messageArray = message.content.split(" ")
   let cmd = messageArray[0]
@@ -51,8 +54,6 @@ bot.on("message", async message => {
     return;
   };
   
-  let wUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
-  let reason = args.join(" ").slice(22);
   
 //  if(!mods) return message.channel.send("Nejsi moderátor!")
   if(!reason) return message.channel.send("Nedal jsi Duvod! Použití: ``>warn @jmeno důvod``")
