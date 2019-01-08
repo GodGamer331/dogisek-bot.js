@@ -39,7 +39,7 @@ bot.on("message", async message => {
     if(!premium) return message.channel.send("Nemáš Prémium u Dogisek Bot!!")
   
     if(!args[0]) return message.channel.send("Použití: ``>say BlahBlahBlah lol``")
-    const saytxt 
+
     message.channel.send(saytxt)
     return;
   };
