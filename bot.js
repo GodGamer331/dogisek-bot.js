@@ -37,7 +37,7 @@ bot.on("message", async message => {
     if(!args[0]) return message.channel.send("Použití: ``>say BlahBlahBlah lol``")
     const saytxt = args.join(" ");
     message.channel.send(saytxt)
-  break;
+    return;
   };
   
   if(!premium) return message.channel.send("Nejsi Premium na tomto serveru!")
@@ -48,7 +48,7 @@ bot.on("message", async message => {
     .addField(">warn", "Varuje Hráče.")
     .setThumbnail(message.author.avatarURL);
     message.channel.send(embed)
-  break;
+    return;
   };
   let wUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0])
   let reason = args.join(" ").slice(22);
@@ -68,7 +68,7 @@ bot.on("message", async message => {
     if(!warnchannel) return message.channel.send("Nemůžu najít kanál ``logs``")
     
     warnchannel.send(embed)
-  break;
+    return;
   };
 });
 
