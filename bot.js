@@ -21,15 +21,15 @@ bot.on("message", async message => {
   if (message.author.bot) return;
   if (message.channel.type === "dm") return;
 
-  let prefix = ">";
-  let messageArray = message.content.split(" ");
-  let cmd = messageArray[0];
-  let args = messageArray.slice(1);
-  let a = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
-  let b = args.join(" ").slice(22);
-  let logs = message.guild.channels.find(`name`, `logs`);
-  let mods = message.guild.roles.find("name", "Moderator");
-  let premium = message.guild.roles.find("name", "★†Premium†★");
+  let prefix = ">"
+  let messageArray = message.content.split(" ")
+  let cmd = messageArray[0]
+  let args = messageArray.slice(1)
+  let a = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]))
+  let b = args.join(" ").slice(22)
+  let logs = message.guild.channels.find(`name`, `logs`)
+  let mods = message.guild.roles.find("name", "Moderator")
+  let premium = message.guild.roles.find("name", "★†Premium†★")
   
   
   if(!premium) return message.channel.send("Nemáš Prémium u Dogisek Bot!!")
@@ -66,7 +66,7 @@ bot.on("message", async message => {
     .setThumbnail(message.author.avatarURL);
     
     let warnchannel = message.guild.channels.find(`name`, "logs")
-    if(!warnchannel) return message.channel.send("Nemůžu najít kanál ``logs``")
+    
     
     warnchannel.send(embed)
     return;
