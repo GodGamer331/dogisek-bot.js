@@ -54,7 +54,7 @@ bot.on("message", async message => {
   let wUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
   let reason = args.join(" ").slice(22);
   
-  if(!mods) return message.channel.send("Nejsi moderátor!")
+//  if(!mods) return message.channel.send("Nejsi moderátor!")
   if(!reason) return message.channel.send("Nedal jsi Duvod! Použití: ``>warn @jmeno důvod``")
   if(!wUser) return message.channel.send("Nedal jsi jmeno! Použití: ``>warn @jmeno důvod``");
   if(cmd === `${prefix}warn`){
