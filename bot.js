@@ -29,16 +29,17 @@ bot.on("message", async message => {
   let cmd = messageArray[0]
   let args = messageArray.slice(1)
   let a = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]))
-  let b = args.join(" ").slice(22)
   let logs = message.guild.channels.find(`name`, `logs`)
   
   
   if (cmd === `${prefix}say`){
+    let saytxt = args.join(" ").slice(22)
+  
     let premium = message.guild.roles.find("name", "★†Premium†★")
     if(!premium) return message.channel.send("Nemáš Prémium u Dogisek Bot!!")
   
     if(!args[0]) return message.channel.send("Použití: ``>say BlahBlahBlah lol``")
-    const saytxt = args.join(" ");
+    const saytxt 
     message.channel.send(saytxt)
     return;
   };
