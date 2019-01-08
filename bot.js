@@ -31,20 +31,22 @@ bot.on("message", async message => {
   let a = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]))
   let b = args.join(" ").slice(22)
   let logs = message.guild.channels.find(`name`, `logs`)
-  let mods = message.guild.roles.find("name", "Moderator")
-  let premium = message.guild.roles.find("name", "★†Premium†★")
   
   
-  if(!premium) return message.channel.send("Nemáš Prémium u Dogisek Bot!!")
   if (cmd === `${prefix}say`){
+    let premium = message.guild.roles.find("name", "★†Premium†★")
+    if(!premium) return message.channel.send("Nemáš Prémium u Dogisek Bot!!")
+  
     if(!args[0]) return message.channel.send("Použití: ``>say BlahBlahBlah lol``")
     const saytxt = args.join(" ");
     message.channel.send(saytxt)
     return;
   };
   
-  if (!premium) return message.channel.send("Nejsi Premium na tomto serveru!")
   if (cmd === `${prefix}help`){
+    let premium = message.guild.roles.find("name", "★†Premium†★")
+    if (!premium) return message.channel.send("Nejsi Premium na tomto serveru!")
+  
     var embed = new Discord.RichEmbed()
     .setTitle("Zdásemi že potřebuješ pomoc" + message.author)
     .addField(">say", "Bot řekne co chceš!")
@@ -55,10 +57,12 @@ bot.on("message", async message => {
   };
   
   
-//  if(!mods) return message.channel.send("Nejsi moderátor!")
-  if(!reason) return message.channel.send("Nedal jsi Duvod! Použití: ``>warn @jmeno důvod``")
-  if(!wUser) return message.channel.send("Nedal jsi jmeno! Použití: ``>warn @jmeno důvod``");
   if(cmd === `${prefix}warn`){
+    let mods = message.guild.roles.find("name", "Moderator")
+    if(!mods) return message.channel.send("Nejsi moderátor!")
+    if(!reason) return message.channel.send("Nedal jsi Duvod! Použití: ``>warn @jmeno důvod``")
+    if(!wUser) return message.channel.send("Nedal jsi jmeno! Použití: ``>warn @jmeno důvod``");
+
     var embed = new Discord.RichEmbed()
     .setTitle("Varování")
     .addField("Varován:", wUser)
