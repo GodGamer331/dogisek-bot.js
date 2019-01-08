@@ -26,7 +26,7 @@ bot.on("message", async message => {
   let cmd = messageArray[0];
   let args = messageArray.slice(1);
   let a = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
-  let b = args.join(" ").slice(22)
+  let b = args.join(" ").slice(22);
   let logs = message.guild.channels.find(`name`, `logs`);
   let mods = message.guild.roles.find("name", "Moderator");
   let premium = message.guild.roles.find("name", "★†Premium†★");
@@ -50,11 +50,12 @@ bot.on("message", async message => {
     message.channel.send(embed)
     return;
   };
-  let wUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0])
+  
+  let wUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
   let reason = args.join(" ").slice(22);
   if(!mods) return message.channel.send("Nejsi moderátor!")
   if(!reason) return message.channel.send("Nedal jsi Duvod! Použití: ``>warn @jmeno důvod``")
-  if(!wUser) return message.channel.send("Nedal jsi jmeno! Použití: ``>warn @jmeno důvod``")
+  if(!wUser) return message.channel.send("Nedal jsi jmeno! Použití: ``>warn @jmeno důvod``");
   if(cmd === `${prefix}warn`){
     var embed = new Discord.RichEmbed()
     .setTitle("Varování")
@@ -62,7 +63,7 @@ bot.on("message", async message => {
     .addField("Moderátor:", message.author.username)
     .addField("Důvod:", reason)
     .setColor("RED")
-    .setThumbnail(message.author.avatarURL)
+    .setThumbnail(message.author.avatarURL);
     
     let warnchannel = message.guild.channels.find(`name`, "logs")
     if(!warnchannel) return message.channel.send("Nemůžu najít kanál ``logs``")
