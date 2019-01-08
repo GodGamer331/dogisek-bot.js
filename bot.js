@@ -13,31 +13,8 @@ bot.on("ready", async () => {
 
 //fuck
 
-module.exports.run = async (bot, message, args) => {
 
-if(!warns.warns) {
-message.channel.send(new Discord.RichEmbed()
-.setDescription("There are no warnings")
-);
-return;
-};
-if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.reply("You can't do that.");
-let wUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0])
-if(!wUser) return message.reply("Couldn't find them yo");
-let warnlevel = warns[wUser.id].warns;
 
-message.channel.send(new Discord.RichEmbed()
-.setDescription("Warning Information")
-.setColor("#c40000")
-.addField("Member", `${wUser.id}`)
-.addField("Moderator", message.author.username)
-.addField("Amount of Warns", warnlevel));
-
-}
-
-module.exports.help = {
-name: "warnlevel"
-}
 
 bot.on("message", async message => {
 
@@ -72,9 +49,23 @@ bot.on("message", async message => {
     message.channel.send(embed)
   
   };
-  
+  let wUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0])
+  let reason = args.join(" ").slice(22);
+  if(!mods) return message.channel.send("Nejsi moderátor!")
+  if(cmd === `${prefix}warn`){
+    var embed = new Discord.RichEmbed()
+    .setTitle("Varování")
+    .addField("Varován:", wUser)
+    .addField("Moderátor:", message.author.username)
+    .addField("Důvod:", reason)
+    .setColor("RED")
+    .setThumbnail(message.author.avatarURL)
     
-  
+    let warnchannel = message.guild.channels.find(`name`, "logs")
+    if(!warnchannel) return message.channel.send("Nemůžu najít kanál ``logs``")
+    
+    warnchannel.send(embed)
+  };
 });
 
 bot.login(process.env.token);
