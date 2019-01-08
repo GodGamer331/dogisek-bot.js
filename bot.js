@@ -11,7 +11,7 @@ bot.on("ready", async () => {
 });
 
 
-//fuck
+
 
 
 
