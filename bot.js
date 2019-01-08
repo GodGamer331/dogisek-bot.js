@@ -40,8 +40,8 @@ bot.on("message", async message => {
     return;
   };
   
-  if(!premium) return message.channel.send("Nejsi Premium na tomto serveru!")
-  if(cmd === `${prefix}help`){
+  if (!premium) return message.channel.send("Nejsi Premium na tomto serveru!")
+  if (cmd === `${prefix}help`){
     var embed = new Discord.RichEmbed()
     .setTitle("Zdásemi že potřebuješ pomoc" + message.author)
     .addField(">say", "Bot řekne co chceš!")
@@ -53,6 +53,7 @@ bot.on("message", async message => {
   
   let wUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
   let reason = args.join(" ").slice(22);
+  
   if(!mods) return message.channel.send("Nejsi moderátor!")
   if(!reason) return message.channel.send("Nedal jsi Duvod! Použití: ``>warn @jmeno důvod``")
   if(!wUser) return message.channel.send("Nedal jsi jmeno! Použití: ``>warn @jmeno důvod``");
@@ -62,8 +63,8 @@ bot.on("message", async message => {
     .addField("Varován:", wUser)
     .addField("Moderátor:", message.author.username)
     .addField("Důvod:", reason)
-    .setColor("RED")
-    .setThumbnail(message.author.avatarURL);
+    .setColor("RED");
+    
     
     let warnchannel = message.guild.channels.find(`name`, "logs")
     
